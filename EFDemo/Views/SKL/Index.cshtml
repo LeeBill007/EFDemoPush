@@ -1,0 +1,54 @@
+﻿@model System.Collections.Generic.List<Model.Person>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>@ViewBag.name</h1>
+</div>
+
+<div class="row">
+    <div class="container">
+        <h2>Person資料</h2>
+        <button class="btn btn-primary btn-block" onclick="doAdd()">新增</button>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Do</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <button class="btn btn-warning" onclick="doEdit(@item.Id)">修改</button>
+                        <button class="btn btn-danger" onclick="doDelete(@item.Id)">刪除</button>
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Age</td>
+                    <td>@item.Gender</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section scripts{
+<script>
+        function doAdd() {
+            window.location.href = '@Url.Action("Add","Home")/'
+        }
+
+        function doEdit(id) {
+            window.location.href = '@Url.Action("Edit","Home")/' + id
+        }
+
+        function doDelete(id) {
+            if (confirm('是否確定要刪除?')) {
+                window.location.href = `@Url.Action("Delete","Home")/${id}`
+            }
+        }
+</script>
+}
